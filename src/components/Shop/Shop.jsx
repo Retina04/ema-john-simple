@@ -14,7 +14,7 @@ const Shop = () => {
   }, []);
   useEffect(() => {
     const storedCart = getShoppingCart();
-  const savedCart =[];
+    const savedCart = [];
     //step :1 get the id
     for (const id in storedCart) {
       //step-2 get the product by id
@@ -23,16 +23,49 @@ const Shop = () => {
       if (savedProduct) {
         const quantity = storedCart[id];
         savedProduct.quantity = quantity;
-        savedCart.push((savedProduct))
+        savedCart.push(savedProduct);
       }
     }
     //step-5 saved the card
     setCart(savedCart);
   }, [products]);
+  //   const handleAddToCart = (product) => {
+  //     //const newCart = [...cart, product];
+  //    // cart.push(product);
+  //    let newCart =[];
+  //    const exits = cart.find(pd =>pd.id===product.id);
+  //     if(!exits){
+  //         product.quantity = 1;
+  //          newCart = [...cart, product];
+  //     }
+  //     else{
+  //         exits.quantity = exits.quantity + 1;
+  //         const remaining = cart.filter(pd =>pd.id !==product.id)
+  //         newCart =[...remaining,exits]
+  //     }
+
+  //    }
+  //     //if product doesn't exit in the cart then set quantity = 1
+  //     //if exit update the quantity by 1
+  //     setCart(newCart);
+  //     addToDb(product.id);
+  //   };
   const handleAddToCart = (product) => {
-    const newCart = [...cart, product];
+    // cart.push(product);
+    // const newCart = [...cart, product];
+    // setCart(newCart);
+    let newCart = [];
+    const exits = cart.find((pd) => pd.id === product.id);
+    if (!exits) {
+      product.quantity = 1;
+      newCart = [...cart, product];
+    } else {
+      exits.quantity = exits.quantity + 1;
+      const remaining = cart.filter((pd) => pd.id !== product.id);
+      newCart = [...remaining, exits];
+    }
     setCart(newCart);
-    addToDb(product.id);
+       addToDb(product.id);
   };
   return (
     <div className="shop-container">
