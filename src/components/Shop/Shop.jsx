@@ -6,14 +6,16 @@ import "./Shop.css";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
+  
   useEffect(() => {
     fetch("products.json")
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
+  const [cart, setCart] = useState([]);
   useEffect(() => {
     const storedCart = getShoppingCart();
+    console.log(storedCart)
     const savedCart = [];
     //step :1 get the id
     for (const id in storedCart) {
@@ -65,7 +67,7 @@ const Shop = () => {
       newCart = [...remaining, exits];
     }
     setCart(newCart);
-       addToDb(product.id);
+    addToDb(product.id);
   };
   return (
     <div className="shop-container">
